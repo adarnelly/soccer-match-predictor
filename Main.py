@@ -59,7 +59,7 @@ def win_percent(overall1, overall2):
 
 def print_report(name, sot, passes, overall, win_pct):
     #prints the extra stats for one team
-    #shows the remainder when shots on target is divided by 10
+    #shows last digit of shots on target
     shot_accuracy = sot % 10
     #squares the overall for a bonus
     dominance = overall ** 2
@@ -116,10 +116,10 @@ def play_series(matches, team1_name, team2_name):
     team1_wins = 0
     team2_wins = 0
     draws = 0
-    #range() makes the loop run once per match, starting the count at 1
+    #goes through each match, starting at 1 instead of 0
     for match_number in range(1, matches + 1):
         result = play_match(match_number, team1_name, team2_name)
-        #+= is a shortcut for team1_wins = team1_wins + 1
+        #gives a win to whoever wins the match
         if result == 1:
             team1_wins += 1
         elif result == 2:
@@ -129,10 +129,10 @@ def play_series(matches, team1_name, team2_name):
     print("=" * 75)
     print("SERIES RESULTS")
     print(team1_name, "wins:", team1_wins, "|", team2_name, "wins:", team2_wins, "| Draws:", draws)
-    #!= checks that the win counts are not the same, so somebody won the series
+    #only picks a series winner if they are not tied
     if team1_wins != team2_wins:
         if team1_wins > team2_wins:
-            #"*" repeats the star once per win and "+" joins the pieces together
+            #one star for every match won
             print(team1_name + " takes the series! " + "*" * team1_wins)
         else:
             print(team2_name + " takes the series! " + "*" * team2_wins)
@@ -149,7 +149,7 @@ def main():
         team1_name = input("Enter Team 1's name: ")
         team2_name = input("Enter Team 2's name: ")
         matches = get_stat("How many matches are in the series? ")
-        #keeps the series a sensible size, "or" means either problem triggers the fix
+        #0 matches is not possible and more than 7 is too many so it gets set to 3 instead
         if matches == 0 or matches > 7:
             print("Series set to 3 matches instead.")
             matches = 3
